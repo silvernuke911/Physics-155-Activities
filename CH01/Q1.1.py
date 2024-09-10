@@ -8,4 +8,4 @@ def fact(n):
     for i in range(1,n+1):
         p*=i
     return p
-print(fact(5.9))
+print(fact(1))
