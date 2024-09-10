@@ -21,3 +21,5 @@ def kahansum(xs):
         s = temp + y
         e = (temp - s) + y
     return s
+
+print(kahansum([0.1,0.2]))
