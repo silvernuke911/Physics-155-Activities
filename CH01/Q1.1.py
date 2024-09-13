@@ -9,3 +9,4 @@ def fact(n):
         p*=i
     return p
 print(fact(1))
+
