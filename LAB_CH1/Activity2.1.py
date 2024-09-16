@@ -7,14 +7,13 @@ III - BS Physics
 '''
 import random
 
-# Helper function
+# Helper functions
 # Creates a matrix of 0's with a given row and column (list version of np.zeroes)
-# Outputs the size of a matrix (list version of np.size)
-
 def zero_matrix(rows,cols):
     output = [[0 for _ in range(cols)] for _ in range(rows)]
     return output
 
+# Outputs the size of a matrix (list version of np.size)
 def mat_size(matrix):
     # check if the matrix has same length rows
     rowlen = len(matrix[0])
@@ -23,6 +22,7 @@ def mat_size(matrix):
             raise ValueError('Matrix given is not actually a matrix (unequal row length)')
     else:
         return len(matrix), len(matrix[0])
+    
 # A.1
 # Creates a matrix of random integers with rows and columns
 
@@ -80,7 +80,7 @@ vector2 = [3,4]
 rows,cols = 4,5
 
 print('Random integer matrix :', random_integer_matrix(rows,cols))
-# print('Scalar product :', scalar_product(vector1,vector2))
+print('Scalar product :', scalar_product(vector1,vector2))
 print('Transpose matrix :' , transpose_matrix(matrix3))
 print('Matrix multiplication :' , matrix_multiply(matrix1,matrix2))
 
@@ -92,6 +92,7 @@ import numpy as np
 
 matrix1 = np.array(matrix1)
 matrix2 = np.array(matrix2)
+matrix3 = np.array(matrix3)
 vector1 = np.array(vector1)
 vector2 = np.array(vector2)
 
