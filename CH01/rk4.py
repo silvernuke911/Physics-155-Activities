@@ -272,3 +272,106 @@ plt.grid(True)
 plt.tight_layout()
 plt.show()
 
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+def rk4_general(func, x0, v0, t0, t_end, h):
+    """
+    Solve a system of ODEs using the RK4 method for a general acceleration function.
+
+    Parameters:
+    acc_func : function
+        The function defining the acceleration, a = acc_func(x, v).
+    x0 : float
+        The initial position.
+    v0 : float
+        The initial velocity.
+    t0 : float
+        The initial time.
+    t_end : float
+        The end time for the integration.
+    h : float
+        The step size.
+
+    Returns:
+    t_values : numpy.ndarray
+        The array of time values.
+    x_values : numpy.ndarray
+        The array of position values at each time step.
+    v_values : numpy.ndarray
+        The array of velocity values at each time step.
+    """
+    # Number of steps
+    n_steps = int((t_end - t0) / h)
+    
+    # Initialize arrays to store the time values and the solution values
+    t_values = np.linspace(t0, t_end, n_steps + 1)
+    x_values = np.zeros(n_steps + 1)
+    v_values = np.zeros(n_steps + 1)
+    
+    # Set the initial values
+    t_values[0] = t0
+    x_values[0] = x0
+    v_values[0] = v0
+    
+    # Define the system of ODEs
+    def system(t, state):
+        x = state[0]
+        v = state[1]
+        a = func(x, v)
+        return np.array([v, a])
+    
+    # Perform the RK4 integration
+    for i in range(n_steps):
+        t = t_values[i]
+        state = np.array([x_values[i], v_values[i]])
+        
+        # Compute k1, k2, k3, k4
+        k1 = h * system(t, state)
+        k2 = h * system(t + h / 2, state + k1 / 2)
+        k3 = h * system(t + h / 2, state + k2 / 2)
+        k4 = h * system(t + h, state + k3)
+        
+        # Update x and v
+        state += (k1 + 2 * k2 + 2 * k3 + k4) / 6
+        x_values[i + 1], v_values[i + 1] = state
+    
+    return t_values, x_values, v_values
+
+# Example acceleration function for a simple harmonic oscillator
+def harmonic_acceleration(x, v):
+    omega = 2 * np.pi  # Angular frequency (e.g., 1 Hz frequency)
+    return -omega**2 * x
+
+# Parameters for the system
+x0 = 1            # Initial position
+v0 = 0            # Initial velocity
+t0 = 0            # Initial time
+t_end = 10        # End time
+h = 0.001           # Step size
+
+# Solve the system
+t_values, x_values, v_values = rk4_general(harmonic_acceleration, x0, v0, t0, t_end, h)
+
+# Plot the results
+plt.figure(figsize=(10, 6))
+
+plt.subplot(1, 2, 1)
+plt.plot(t_values, x_values, label='Position x(t)')
+plt.xlabel('Time t')
+plt.ylabel('x(t)')
+plt.title('Position vs Time')
+plt.grid(True)
+plt.legend()
+
+plt.subplot(1, 2, 2)
+plt.plot(t_values, v_values, label='Velocity v(t)', color='r')
+plt.xlabel('Time t')
+plt.ylabel('v(t)')
+plt.title('Velocity vs Time')
+plt.grid(True)
+plt.legend()
+
+plt.tight_layout()
+plt.show()
