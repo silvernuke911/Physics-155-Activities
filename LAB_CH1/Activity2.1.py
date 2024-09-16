@@ -9,11 +9,20 @@ import random
 
 # Helper function
 # Creates a matrix of 0's with a given row and column (list version of np.zeroes)
+# Outputs the size of a matrix (list version of np.size)
 
 def zero_matrix(rows,cols):
     output = [[0 for _ in range(cols)] for _ in range(rows)]
     return output
 
+def mat_size(matrix):
+    # check if the matrix has same length rows
+    rowlen = len(matrix[0])
+    for row in matrix:
+        if len(row) != rowlen:
+            raise ValueError('Matrix given is not actually a matrix (unequal row length)')
+    else:
+        return len(matrix), len(matrix[0])
 # A.1
 # Creates a matrix of random integers with rows and columns
 
@@ -37,7 +46,7 @@ def scalar_product(list1,list2):
 # Transposes a given matrix
 
 def transpose_matrix(orig_matrix):
-    row,col = len(orig_matrix), len(orig_matrix[0])
+    row,col = mat_size(orig_matrix)
     output_matrix = zero_matrix(col,row)
     for i in range(row):
         for j in range(col):
@@ -48,8 +57,8 @@ def transpose_matrix(orig_matrix):
 # Multiplies two given matrices
 
 def matrix_multiply(matrix1, matrix2):
-    r1, c1 = len(matrix1), len(matrix1[0])
-    r2, c2 = len(matrix2), len(matrix2[0])
+    r1, c1 = mat_size(matrix1)
+    r2, c2 = mat_size(matrix2)
     if c1 != r2:
         raise ValueError('Matrices do not match, cannot get matrix product')
     else:
@@ -71,7 +80,7 @@ vector2 = [3,4]
 rows,cols = 4,5
 
 print('Random integer matrix :', random_integer_matrix(rows,cols))
-print('Scalar product :', scalar_product(vector1,vector2))
+# print('Scalar product :', scalar_product(vector1,vector2))
 print('Transpose matrix :' , transpose_matrix(matrix3))
 print('Matrix multiplication :' , matrix_multiply(matrix1,matrix2))
 
