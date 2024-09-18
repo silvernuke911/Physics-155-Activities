@@ -10,6 +10,5 @@ def quadratic_formula(coeff_list):
         x1 = (-b - np.sqrt(discriminant)) / (2*a)
         x2 = (-b + np.sqrt(discriminant)) / (2*a)
         return x1,x2
-
 print(quadratic_formula([1,9,1]))
 

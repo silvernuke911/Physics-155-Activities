@@ -29,10 +29,10 @@ def rk4(f, x, y_0, dx):
 def rk2(f, x, y_0, dx):
     y = np.zeros_like(x) 
     y[0] = y_0
-    for i in range(len(x)-1):
-        k1 = f(x[i],y[i])
+    for i in range(len(x) - 1):
+        k1 = f(x[i], y[i])
         k2 = f(x[i] + dx/2, y[i] + dx*k1/2)
-        y[i + 1] = y[i] + (dx/6)*(k1 + 2*k2)
+        y[i + 1] = y[i] + dx * k2
     return y
 
 def func(x,y):
@@ -69,7 +69,6 @@ def derivative(f,x,dx):
 
 def second_derivative(f, x, dx):
     y = np.zeros_like(x)
-    
     for i in range(len(x)):
         if i == 0:
             y[i] = (f(x[i+2]) - 2 * f(x[i+1]) + f(x[i])) / (dx * dx)

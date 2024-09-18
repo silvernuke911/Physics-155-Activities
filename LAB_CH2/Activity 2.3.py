@@ -25,7 +25,7 @@ def sqwave_approx(x, niters):
         output[i] = (2 / np.pi) * sin_sum(x_val, niters)
     return output
 
-# Timper function
+# Timer function
 def time_function(func, dtype):
     x = np.linspace(-4 * np.pi, 4 * np.pi, 1000, dtype=dtype)
     start_time = time.time()

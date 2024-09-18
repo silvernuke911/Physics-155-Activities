@@ -55,4 +55,71 @@ y = Lenard_Jones_U(x,1,1)
 plt.plot(x,y,color='b')
 plt.grid()
 plt.show()
-plt.imshow(x,y)
+
+def generate_primes(n):
+    if n < 1:
+        return []
+    primes = np.zeros(n, dtype=int)  # Pre-allocate an array for n primes
+    primes[0] = 2  # The first prime is 2
+    count = 1  # Number of primes found so far
+    candidate = 3  # Start checking from 3 (since 2 is already known)
+    while count < n:
+        is_prime = True
+        # Check divisibility only by known primes up to sqrt(candidate)
+        limit = int(np.sqrt(candidate)) + 1
+        for prime in primes[:count]:
+            if prime > limit:  # No need to check beyond sqrt(candidate)
+                break
+            if candidate % prime == 0:
+                is_prime = False
+                break
+        if is_prime:
+            primes[count] = candidate
+            count += 1
+        candidate += 2  # Skip even numbers, only check odd candidates
+    return primes
+n=1000
+prime_list = generate_primes(n)
+print(f"The first {n} primes are: {prime_list}")
+
+import decimal
+from decimal import Decimal, getcontext
+
+import decimal
+from decimal import Decimal, getcontext
+
+def generate_pi(n):
+    """
+    Generate pi to n decimal places using the Chudnovsky algorithm.
+    
+    Parameters:
+    n (int): Number of decimal places of pi to generate.
+
+    Returns:
+    str: The value of pi up to n decimal places as a string.
+    """
+    getcontext().prec = n + 2  # Set precision to n decimal places + extra digits for internal rounding
+
+    # Constants for Chudnovsky algorithm
+    C = 426880 * Decimal(10005).sqrt()
+    M = 1
+    X = 1
+    L = 13591409
+    K = 6
+    S = L
+
+    for i in range(1, n * 2):  # Adjust iteration count for precision
+        M = (M * (K**3 - 16*K)) // (i**3)
+        L += 545140134
+        X *= -262537412640768000
+        S += Decimal(M * L) / X
+        K += 12
+
+    pi = C / S
+    return str(pi)[:n+2]  # Return pi up to n decimal places
+
+# Example usage
+n = 1000  # Number of decimal places
+pi_value = generate_pi(n)
+print(f"Pi to {n} decimal places is: {pi_value}")
+

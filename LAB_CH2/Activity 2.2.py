@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+
 # Aesthetic decision
 def latex_font():
     import matplotlib as mpl
@@ -14,8 +15,6 @@ def latex_font():
     cmfont = font_manager.FontProperties(fname=mpl.get_data_path() + '/fonts/ttf/cmr10.ttf')
 
 # 2.18
-# # create original function, perform a 
-# # perform b, and how long does it take to run
 
 def sqwave_true(x,frequency=0.25,amplitude=1,phase=0,offset=0):
     y=amplitude*np.sin(2*np.pi*frequency*x+phase)+offset
@@ -44,24 +43,25 @@ y_true = sqwave_true(x,0.5/np.pi,0.5,0,0)
 y_approx = sqwave_approx(x,150)
 
 latex_font()
-plt.subplot(2, 1, 1)
+
+fig, ax = plt.subplots()
+
 plt.grid()
+plt.plot(x,y_true, color = 'r')
 xtick = np.arange(max_side,min_side+np.pi, np.pi)
 plt.xlim([max_side,min_side])
 plt.xticks(xtick,[r'-4$\pi$',r'-3$\pi$',r'-2$\pi$',r'-$\pi$',r'0',r'$\pi$',r'$2\pi$',r'$3\pi$',r'$4\pi$'])
-plt.plot(x,y_true, color = 'r')
 plt.title('Analytic piecewise function')
 plt.xlabel(r'$x$')
-plt.ylabel(r'$y$')
+plt.ylabel(r'$f(x)$')
+plt.show()
 
-plt.subplot(2, 1, 2)
 plt.grid()
+plt.plot(x,y_approx, color = 'b')
 xtick = np.arange(max_side,min_side+np.pi, np.pi)
 plt.xlim([max_side,min_side])
 plt.xticks(xtick,[r'-4$\pi$',r'-3$\pi$',r'-2$\pi$',r'-$\pi$',r'0',r'$\pi$',r'$2\pi$',r'$3\pi$',r'$4\pi$'])
-plt.plot(x,y_approx, color = 'b')
-plt.title('Approximate piecewise function (summation)')
+plt.title('Approximate piecewise function')
 plt.xlabel(r'$x$')
-plt.ylabel(r'$y$')
-
+plt.ylabel(r'$f(x)$')
 plt.show()
