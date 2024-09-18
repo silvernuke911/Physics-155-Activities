@@ -44,3 +44,15 @@ ax.set_aspect(0.3, adjustable='box')
 ax.set_axisbelow(True)
 plt.grid(True)
 plt.show()
+
+def Lenard_Jones_U(r, r_0, epsilon):
+    U = epsilon*((r/r_0)**12 - 2 * (r/r_0)**6)
+    return U
+
+x = np.linspace(-1.1,1.1,1000)
+y = Lenard_Jones_U(x,1,1)
+
+plt.plot(x,y,color='b')
+plt.grid()
+plt.show()
+plt.imshow(x,y)
