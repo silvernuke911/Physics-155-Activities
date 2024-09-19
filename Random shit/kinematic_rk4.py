@@ -46,6 +46,7 @@ v0 = np.array([0])
 y = kinematic_rk4(t,spring_acc,r0,v0)[0]
 v = kinematic_rk4(t,spring_acc,r0,v0)[1]
 a = kinematic_rk4(t,spring_acc,r0,v0)[2]
+
 plt.plot(t,y)
 plt.plot(t,v)
 plt.plot(t,a)
