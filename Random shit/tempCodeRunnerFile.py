@@ -1,2 +1,1 @@
-plt.plot(t,y)
-# plt.show()
+plt.plot(t,y, color = 'b')

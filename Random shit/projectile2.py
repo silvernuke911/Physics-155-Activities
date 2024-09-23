@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 v_0 = 100  # Initial velocity (m/s)
 angle = 30  # Launch angle (degrees)
 theta = np.deg2rad(angle)  # Convert angle to radians
-t0, tf, dt = 0, 12, 0.05  # Time parameters
+t0, tf, dt = 0, 12, 0.01  # Time parameters
 g0 = 9.8
 
 # Time array
@@ -156,7 +156,7 @@ r_vrl, v_vrl, a_vrl = projectile_motion_verlet(t, r0, v0)
 r_elr, v_elr, a_elr = projectile_motion_euler(t, r0, v0)
 r_rk4, v_rk4, a_rk4 = projectile_motion_rk4(t, r0, v0)
 
-dt = 0.0001
+dt = 0.00001
 t_precise = np.arange(t0,tf,dt)
 r_act, v_act, a_act = projectile_motion_euler(t_precise, r0, v0)
 
