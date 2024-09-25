@@ -24,20 +24,21 @@ x = np.linspace(-extent * a, extent * a, N)
 dx = x[1]-x[0]
 
 # Potential function
-def potential_function(x):
-    return V0 * (np.abs(x) <= a)
+# def potential_function(x):
+#     return V0 * (np.abs(x) <= a)
 
 def potential_function(x):
     output = np.zeros_like(x)
     for i,x_i in enumerate(x):
         if x_i < -2 :
-            output[i] = 0
+            output[i] = 10000
         if x_i > -2 and x_i <= 0 :
-            output[i] = -1
+            output[i] = V0+0.4
         if x_i > 0 and x_i < 2 :
             output[i] = V0
         if x_i > 2 :
-            output[i] = 0
+            output[i] = 10000
+    # output = 0.1* x**2 - 3
     return output
 
 # Hamiltonian
@@ -51,7 +52,7 @@ hamiltonian_operator = (- 1/(2* mu)) * derivative_matrix + potential_matrix
 eigenvalues, eigenvectors = np.linalg.eigh(hamiltonian_operator)
 
 # Find the ground state (first eigenvalue)
-n = 7
+n = 50
 ground_state_energy = eigenvalues[n]
 ground_state_wavefunction = eigenvectors[:, n]
 
