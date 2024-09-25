@@ -1,1 +1,1 @@
-plt.plot(t,y, color = 'b')
+print(potential_matrix)

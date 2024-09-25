@@ -24,9 +24,9 @@ def drag_a(v, m=1, k=0.5):
     drag_acc = -k * norm_v * (v / norm_v) / m
     return drag_acc
 
-def projectile_motion_rk4(t, r0, v0):
+def projectile_motion_rk4(t, r0, v0, a0):
     def equations(t, state):
-        r, v = state[:2], state[2:]
+        r, v, a = state[:2], state[2:], state[]
         a = a_g + drag_a(v)
         return np.concatenate([v, a])
     def rk4_step(f, t, state, dt):
@@ -35,17 +35,17 @@ def projectile_motion_rk4(t, r0, v0):
         k3 = dt * f(t + dt / 2, state + k2 / 2)
         k4 = dt * f(t + dt, state + k3)
         return state + (k1 + 2 * k2 + 2 * k3 + k4) / 6
-    state = np.concatenate([r0, v0])
+    state = np.concatenate([r0, v0, a0])
     r = np.zeros((len(t), 2))  # Position array
     v = np.zeros((len(t), 2))  # Velocity array
+    a = np.zeros((len(t), 2))  # Position array
     r[0] = r0
     v[0] = v0
-    
     for i in range(len(t) - 1):
         state = rk4_step(equations, t[i], state, dt)
         r[i + 1], v[i + 1] = state[:2], state[2:]
     
-    return r, v
+    return r, v, a
 
 # Run simulation
 r, v = projectile_motion_rk4(t, r0, v0)

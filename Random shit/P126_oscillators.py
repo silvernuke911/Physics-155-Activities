@@ -37,7 +37,7 @@ def kinematic_rk4(t, f, r0, v0):
 def spring_acc(t,r,v):
     k = 0.5
     m = 1
-    b = 0.2
+    b = 2
     return - (k/m) * r - b * v
 
 t0,tf,dt = 0,100,0.01
@@ -45,9 +45,11 @@ t0,tf,dt = 0,100,0.01
 t = np.arange(t0,tf,dt)
 r0 = np.array([1])
 v0 = np.array([0])
-y = kinematic_rk4(t,spring_acc,r0,v0)[0]
-v = kinematic_rk4(t,spring_acc,r0,v0)[1]
-a = kinematic_rk4(t,spring_acc,r0,v0)[2]
+
+simulation = kinematic_rk4(t,spring_acc,r0,v0)
+y = simulation[0]
+v = simulation[1]
+a = simulation[2]
 
 plt.plot(t,y, color = 'r')
 plt.plot(t,v, color = 'b')
