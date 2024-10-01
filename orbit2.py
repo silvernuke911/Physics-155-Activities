@@ -111,8 +111,8 @@ def plot_errors():
 
 # Set initial conditions
 r_i = np.array([1, 0])
-v_i = np.array([0, 1])
-dt = 0.0001
+v_i = np.array([0, 1.1])
+dt = 0.001
 t = np.arange(0, 40 + dt, dt)
 
 # Run simulations
