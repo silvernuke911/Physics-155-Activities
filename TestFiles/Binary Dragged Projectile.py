@@ -1,6 +1,32 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+# Constants
+v_0 = 100  # Initial velocity (m/s)
+angle = 30  # Launch angle (degrees)
+theta = np.deg2rad(angle)  # Convert angle to radians
+t0, tf, dt = 0, 12, 0.01  # Time parameters
+g0 = 9.8
+
+# Time array
+t = np.arange(t0, tf, dt)
+
+# Acceleration due to gravity (m/s^2)
+a_g = np.array([0, -9.8])
+
+# Initial conditions
+v0 = np.array([v_0 * np.cos(theta), v_0 * np.sin(theta)])
+r0 = np.array([0, 0])
+
+k = 0.9
+
+def drag_a(t,r,v, k=0.1, m=1):
+    norm_v = np.linalg.norm(v)
+    if norm_v == 0:
+        return np.array([0, 0])  # Avoid division by zero
+    drag_acc = - k * norm_v**2  * (v / norm_v) / m
+    return drag_acc + a_g
+
 def kinematic_rk4(t, f, r0, v0):
     dt = t[1] - t[0]  # Assuming uniform time steps
     half_dt = dt / 2
@@ -34,21 +60,27 @@ def kinematic_rk4(t, f, r0, v0):
         a[i + 1] = f(t[i + 1], r[i + 1], v[i + 1])
     return r, v, a
 
-def spring_acc(t,r,v):
-    k = 0.5
-    m = 1
-    return - k * r / m
+r,v,a = kinematic_rk4(t,drag_a,r0,v0)
 
-t0,tf,dt = 0,100,0.5
-t = np.arange(t0,tf,dt)
-r0 = np.array([1])
-v0 = np.array([0])
-y = kinematic_rk4(t,spring_acc,r0,v0)[0]
-v = kinematic_rk4(t,spring_acc,r0,v0)[1]
-a = kinematic_rk4(t,spring_acc,r0,v0)[2]
+angle_list = np.arange(0,90,5)
+for theta in angle_list:
+    theta = np.deg2rad(theta)  # Convert angle to radians
+    v0 = np.array([v_0 * np.cos(theta), v_0 * np.sin(theta)])
+    r,v,a = kinematic_rk4(t,drag_a,r0,v0)
+    plt.plot(r[:,0], r[:,1], color = 'r')
+    plt.ylim([0,max(r[:,1])*1.2])
+    plt.gca().set_aspect('equal')
+    plt.grid()
+plt.figure(figsize=(10, 6))
+plt.xlabel('Horizontal Distance (m)')
+plt.ylabel('Vertical Distance (m)')
+plt.title('Projectile Motion with Drag')
+plt.gca().set_aspect('equal')
+plt.grid(True)
+plt.show()
 
-plt.plot(t,y)
-plt.plot(t,v)
-plt.plot(t,a)
+x = np.arange(11,1,dtype=int)
+y = x**2
+plt.bar(x,y)
 plt.grid()
 plt.show()
