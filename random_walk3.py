@@ -87,4 +87,3 @@ def bar_plot_3d():
 
     # Show plot
     plt.show()
-bar_plot_3d()

@@ -25,3 +25,8 @@ truncated_max = max_value / 10
 
 plt.imshow(heat_map_grid.T, cmap='inferno', vmin=0, vmax=truncated_max)
 plt.show()
+
+histo = heat_map_grid[400,:]
+plt.bar(range(len(histo)),histo)
+plt.xlim(200,300)
+plt.show()
