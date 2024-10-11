@@ -1,1 +1,0 @@
-print(potential_matrix)

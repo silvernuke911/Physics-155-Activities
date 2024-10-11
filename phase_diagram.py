@@ -31,10 +31,10 @@ xdot = np.linspace(-5, 5, 500)
 X, Xdot = np.meshgrid(x, xdot)
 
 # Compute the Hamiltonian H(x, p) on the grid
-H = hamiltonian(X, Xdot, m, potential_example_2)
+H = hamiltonian(X, Xdot, m, potential_example_1)
 
 # Plot potential function
-plt.plot(x,potential_example_2(x))
+plt.plot(x,potential_example_1(x))
 plt.grid()
 plt.show()
 

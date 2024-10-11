@@ -61,7 +61,6 @@ def kinematic_rk4(t, f, r0, v0):
     return r, v, a
 
 r,v,a = kinematic_rk4(t,drag_a,r0,v0)
-
 angle_list = np.arange(0,90,5)
 for theta in angle_list:
     theta = np.deg2rad(theta)  # Convert angle to radians
@@ -79,8 +78,31 @@ plt.gca().set_aspect('equal')
 plt.grid(True)
 plt.show()
 
-x = np.arange(11,1,dtype=int)
-y = x**2
-plt.bar(x,y)
+
+def find_closest(n_array, n):
+    return min(n_array, key=lambda x: abs(x - n))
+
+angle_list = np.arange(0,90,0.5)
+range_list = np.zeros_like(angle_list)
+range_list_ndrag = np.zeros_like(angle_list)
+def projectile_range(v0, theta):
+    g = 9.81  # Acceleration due to gravity in m/s^2
+     # Convert angle from degrees to radians
+    R = (v0**2 * np.sin(2 * theta)) / g  # Calculate range
+    return R
+for i, theta in enumerate(angle_list):
+    theta = np.deg2rad(theta)  # Convert angle to radians
+    v0 = np.array([v_0 * np.cos(theta), v_0 * np.sin(theta)])  # Initial velocity
+    r, v, a = kinematic_rk4(t, drag_a, r0, v0)  # Run the RK4 function
+    r_x, r_y = r[:, 0], r[:, 1]  # Extract x and y positions
+    
+    # Exclude the first element of r_x and find the closest value to 0
+    closest_index = np.argmin(np.abs(r_y[1:] - 0)) + 1  # Adjust index by +1 to account for the slice
+    
+    # Assign the corresponding y-coordinate to range_list
+    range_list[i] = r_x[closest_index]
+    range_list_ndrag[i] = projectile_range(v_0, theta)
+plt.plot(angle_list,range_list, color = 'r')
+plt.plot(angle_list,range_list_ndrag, color = 'b')
 plt.grid()
 plt.show()

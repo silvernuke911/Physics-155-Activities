@@ -1,0 +1,99 @@
+import numpy as np 
+import matplotlib.pyplot as plt 
+
+def derivative_operator(N,dx):
+    dydx_mat = np.zeros(N) + np.diag(np.ones(N-1),1)-np.diag(np.ones(N-1),-1)
+    dydx_mat[0,0], dydx_mat[-1,-1] = -2, 2
+    dydx_mat[0,1], dydx_mat[-1,-2] = 2, -2
+    return dydx_mat / (2 * dx)
+    
+def double_derivative_operator(N,dx):
+    dx2_mat = (np.diag(np.ones(N - 1), -1) - 2 * np.diag(np.ones(N), 0) + np.diag(np.ones(N - 1), 1))
+    return dx2_mat / (dx**2)
+
+def potential_function_1(x,m,omega):
+    return 0.5* m * omega * x**2
+
+def potential_function_2(x,a,V0):
+    return -np.where(np.abs(x) <= a/2, -V0, 0)
+
+def kinetic_operator(x,dx,m):
+    return -1 / (2 * m ) * double_derivative_operator(len(x),dx)
+
+def SHO_eigenenergies(n,omega):
+    return (n + 0.5) * omega
+
+def finite_square_well_eigenenergies():
+    pass 
+a = 5
+v0 = -20
+N = 2000
+x = np.linspace(-10,10,N)
+m = 1
+omega = 0.9
+
+# Total Hamiltonian (Kinetic + Potential)
+def ham(x_pos,potential_array):
+    dx = x_pos[1]-x_pos[0]
+    return kinetic_operator(x_pos,dx,m) + np.diag(potential_array)
+
+
+# Graphing the states
+# Harmonic oscillator
+eigenvalues, eigenfunction = np.linalg.eigh(ham(x,potential_function_1(x,m,omega)))
+n = 30
+for i in range(n):
+    state_energy = eigenvalues[i]
+    state_wavefunction = eigenfunction[:, i]
+    plt.plot(x,state_wavefunction**2 * 100 + state_energy)
+plt.plot(x,potential_function_1(x,m,omega)*2, color = 'r',linestyle = '--')
+plt.grid()
+plt.ylim(0,10)
+plt.show()
+
+# Harmonic oscillator
+eigenvalues, eigenfunction = np.linalg.eigh(ham(x,potential_function_2(x,a,v0)))
+n = 30
+for i in range(n):
+    state_energy = eigenvalues[i]
+    state_wavefunction = eigenfunction[:, i]
+    plt.plot(x,state_wavefunction**2 * 100 + state_energy)
+plt.plot(x,potential_function_2(x,a,v0), color = 'r',linestyle = '--')
+plt.grid()
+plt.ylim(-25,10)
+plt.show()
+
+N_list = [50,100,150,200]
+eigenvalues, eigenfunction = np.linalg.eigh(ham(x,potential_function_1(x,m,omega)))
+for n in N_list:
+    energies_1 = np.zeros(n)
+    theo_energies_1 = np.zeros(n)
+    for i in range(n):
+        energies_1[i] = state_energy
+        state_energy = eigenvalues[i]
+        theo_energies_1[i]= SHO_eigenenergies(i,omega)
+    plt.scatter(range(n),energies_1, label= f'Numerical value, n = {n}')
+    # plt.scatter(range(n),theo_energies_1, label = f'Theoretical value, n = {n}')
+plt.xlim(0,50)
+plt.grid()
+plt.legend()
+plt.show()
+
+# # Finite square well
+# eigenvalues, eigenfunction = np.linalg.eigh(ham(x,potential_function_2(x,a,v0)))
+# energies_2 = np.zeros(n)
+# theo_energies_2 = np.zeros(n)
+# for i in range(n):
+#     state_energy = eigenvalues[i]
+#     state_wavefunction = eigenfunction[:, i]
+#     # plt.axhline(y = state_energy)
+#     # plt.plot(x,state_wavefunction*20 + state_energy)
+#     energies_2[i] = state_energy
+#     theo_energies_1[i]= SHO_eigenenergies(i,omega)
+# # plt.grid()
+# # plt.plot(x,potential_function_2(x,a,v0),color = 'r')
+# # plt.show()
+
+# plt.scatter(range(n),energies_2, color = 'r', marker = '*')
+# plt.grid()
+# plt.show()

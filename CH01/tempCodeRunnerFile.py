@@ -1,1 +1,0 @@
-plt.plot(x, mdpt, color='g', label='Midpoint Method')

@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 # Function to compute the derivative of the potential V with respect to y1
 def dV_dy(y1, V):
-    # Compute the derivative dV/dy using analytical methods
+    # Compute the derivative dV/dy using numerical differentiation
     h = 1e-5  # Small step for numerical differentiation
     return (V(y1 + h) - V(y1 - h)) / (2 * h)
 
@@ -11,7 +11,7 @@ def dV_dy(y1, V):
 def vector_field(y1, y2, V):
     # dy1/dt = y2 (since y1 is y and y2 is y')
     f1 = y2
-    # dy2/dt = - dV/dy1 (the second-order equation from the potential function)
+    # dy2/dt = -dV/dy1 (the second-order equation from the potential function)
     f2 = -dV_dy(y1, V)
     return f1, f2
 
@@ -33,18 +33,26 @@ def plot_vector_field(V):
 
     # Plot the vector field using quiver
     plt.figure(figsize=(6, 6))
-    plt.quiver(Y1, Y2, F1_norm, F2_norm, angles='xy')
+    plt.quiver(Y1, Y2, F1_norm, F2_norm, angles='xy', scale=30)
     plt.xlabel('$y_1$ (y)')
     plt.ylabel('$y_2$ (y\')')
-    plt.title('Vector Field for the Potential $V(y)$')
+    plt.title('Vector Field for the Potential $V(y)$ (Quiver)')
     plt.grid()
+    plt.show()
+
+    # Adding stream plot
+    plt.streamplot(Y1, Y2, F1, F2, color='blue', linewidth=1, density=1.5)
+    plt.title('Vector Field for the Potential $V(y)$ (Quiver + Stream Plot)')
     plt.show()
 
 def plot_potential(func):
     dx = 0.1
-    x = np.arange(-5,5,dx)
-    plt.plot(x,func(x))
+    x = np.arange(-5, 5, dx)
+    plt.plot(x, func(x))
     plt.grid()
+    plt.xlabel('$y$')
+    plt.ylabel('$V(y)$')
+    plt.title('Potential $V(y)$')
     plt.show()
 
 # Example 1: V(y) = 0.5 * y^2 (simple harmonic oscillator)
@@ -59,6 +67,6 @@ def potential_example_2(y1):
 def potential_example_3(y1):
     return -y1**3 + 5*y1
 
-# Call the plot function with one of the examples
-plot_potential(potential_example_2)
-plot_vector_field(potential_example_2)
+# Call the plot functions with one of the examples
+plot_potential(potential_example_3)
+plot_vector_field(potential_example_3)

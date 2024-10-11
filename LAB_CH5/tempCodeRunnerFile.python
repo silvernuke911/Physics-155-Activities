@@ -1,0 +1,1 @@
+plt.plot(x,potential_function(x),color = 'r')
