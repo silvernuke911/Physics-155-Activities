@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-dx = 0.005
+dx = 0.01
 L = 100
 a = 0.03
 d = 0.3
@@ -11,12 +11,9 @@ y = np.arange(-1, 1, dx)
 theta = np.arctan(x / L)
 
 def sinc(x):
-    output = np.zeros_like(x)
-    for i, xi in enumerate(x):
-        if xi != 0:
-            output[i] = np.sin(xi) / xi
-        else:
-            output[i] = 1
+    output = np.ones_like(x) 
+    mask = x != 0  
+    output[mask] = np.sin(x[mask]) / x[mask]
     return output
 
 # Compute sinc, cos, and Gaussian functions
@@ -36,19 +33,18 @@ minima = 0
 maxima = 0.05
 simula = np.clip(simula, minima, maxima)
 
-# Plot using contourf
-plt.contourf(X, Y, simula, levels=500, cmap='hot', vmax=maxima, vmin=minima)
-plt.colorbar()
+# # Plot using contourf
+# plt.contourf(X, Y, simula, levels=500, cmap='hot', vmax=maxima, vmin=minima)
+# plt.colorbar()
 
-plt.xlabel('$x$ (cm)')
-plt.ylabel('$y$ (cm)')
-plt.gca().set_aspect('equal', adjustable='box')
-plt.show()
+# plt.xlabel('$x$ (cm)')
+# plt.ylabel('$y$ (cm)')
+# plt.gca().set_aspect('equal', adjustable='box')
+# plt.show()
 
-# Optional: Plot using imshow for comparison
-plt.imshow(simula, cmap = 'hot')
-
-plt.colorbar()
+# Plot using imshow for comparison
+plt.imshow(simula, cmap = 'hot', extent = [-10,10,-1,1])
+plt.colorbar(orientation='horizontal', location='bottom', aspect = 40, label = 'Luminosity')
 plt.xlabel('$x$ (cm)')
 plt.ylabel('$y$ (cm)')
 plt.show()

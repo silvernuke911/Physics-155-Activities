@@ -29,6 +29,14 @@ plt.title('Vector Field of the System')
 plt.grid()
 plt.show()
 
+# Plot the vector field using quiver
+plt.streamplot(Y1, Y2, F1_norm, F2_norm, linewidth=1, density=3)
+plt.xlabel('$y_1$ (y)')
+plt.ylabel('$y_2$ (y\')')
+plt.title('Vector Field for $y\'\' = f(y, y\')$')
+plt.grid()
+plt.show()
+
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -59,6 +67,13 @@ def plot_vector_field(func):
     # Plot the vector field using quiver
     plt.figure(figsize=(6, 6))
     plt.quiver(Y1, Y2, F1_norm, F2_norm, angles='xy')
+    plt.xlabel('$y_1$ (y)')
+    plt.ylabel('$y_2$ (y\')')
+    plt.title('Vector Field for $y\'\' = f(y, y\')$')
+    plt.grid()
+    plt.show()
+
+    plt.streamplot(Y1, Y2, F1_norm, F2_norm, linewidth=1, density=3)
     plt.xlabel('$y_1$ (y)')
     plt.ylabel('$y_2$ (y\')')
     plt.title('Vector Field for $y\'\' = f(y, y\')$')
