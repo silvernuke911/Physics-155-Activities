@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-dx = 0.01
+dx = 0.005
 L = 100
 a = 0.03
 d = 0.3
@@ -45,6 +45,7 @@ simula = np.clip(simula, minima, maxima)
 # Plot using imshow for comparison
 plt.imshow(simula, cmap = 'hot', extent = [-10,10,-1,1])
 plt.colorbar(orientation='horizontal', location='bottom', aspect = 40, label = 'Luminosity')
+plt.xticks(range(-10,10+1,2))
 plt.xlabel('$x$ (cm)')
 plt.ylabel('$y$ (cm)')
 plt.show()
