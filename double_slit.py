@@ -1,13 +1,15 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-dx = 0.005
+dx = 0.002
 L = 100
 a = 0.03
 d = 0.3
 lambda_ = 0.000650
-x = np.arange(-10, 10, dx)
-y = np.arange(-1, 1, dx)
+x_lims = [-10,10]
+y_lims = [-1,1]
+x = np.arange(*x_lims, dx)
+y = np.arange(*y_lims, dx)
 theta = np.arctan(x / L)
 
 def sinc(x):
@@ -43,7 +45,7 @@ simula = np.clip(simula, minima, maxima)
 # plt.show()
 
 # Plot using imshow for comparison
-plt.imshow(simula, cmap = 'hot', extent = [-10,10,-1,1])
+plt.imshow(simula, cmap = 'hot', extent = [*x_lims,*y_lims])
 plt.colorbar(orientation='horizontal', location='bottom', aspect = 40, label = 'Luminosity')
 plt.xticks(range(-10,10+1,2))
 plt.xlabel('$x$ (cm)')

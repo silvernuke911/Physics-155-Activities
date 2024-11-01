@@ -1,1 +1,2 @@
-print(potential_matrix)
+print(bin_index)
+print(bins)

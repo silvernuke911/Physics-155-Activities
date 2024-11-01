@@ -50,3 +50,9 @@ for N in [1, 3, 5, 10, 20, 50,100,200]:
     plt.legend()
     plt.grid(True)
     plt.show()
+
+
+A = np.random.rand(10,10)
+xlims = [-5,5]
+ylims = [-5,5]
+plt.imshow(A, extent = [*xlims, *ylims])
