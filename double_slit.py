@@ -12,6 +12,14 @@ x = np.arange(*x_lims, dx)
 y = np.arange(*y_lims, dx)
 theta = np.arctan(x / L)
 
+def latex_font(): 
+    plt.rcParams.update({
+        'text.usetex': True,
+        'font.family': 'serif',
+        'font.size': 12
+    })
+latex_font()
+
 def sinc(x):
     output = np.ones_like(x) 
     mask = x != 0  

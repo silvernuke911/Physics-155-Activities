@@ -18,6 +18,8 @@ def potential_example_2(y1):
 def potential_example_3(y1):
     return -y1**3 + 5*y1
 
+def potential_example_4(y1):
+    return np.exp(-y1)*np.cos(y1)
 # Define the Hamiltonian (total energy) H(x, p)
 def hamiltonian(x, v, m,V):
     return 0.5 * m * v**2 + V(x)
@@ -26,15 +28,15 @@ def hamiltonian(x, v, m,V):
 m = 1.0  # mass
 
 # Create a grid of x and p values
-x = np.linspace(-5, 5, 500)
+x = np.linspace(0, 5, 500)
 xdot = np.linspace(-5, 5, 500)
 X, Xdot = np.meshgrid(x, xdot)
 
 # Compute the Hamiltonian H(x, p) on the grid
-H = hamiltonian(X, Xdot, m, potential_example_1)
+H = hamiltonian(X, Xdot, m, potential_example_4)
 
 # Plot potential function
-plt.plot(x,potential_example_1(x))
+plt.plot(x,potential_example_4(x))
 plt.grid()
 plt.show()
 

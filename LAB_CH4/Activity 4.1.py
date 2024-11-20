@@ -38,17 +38,12 @@ def resistor_solve(n, R = 1,V0 = 5):
     X = np.linalg.solve(A.T@K@A,A.T@K@V)
     return(X)
 
-def latex_font(): # Aesthetic choice
-    import matplotlib as mpl
-    import matplotlib.font_manager as font_manager
+def latex_font(): 
     plt.rcParams.update({
+        'text.usetex': True,
         'font.family': 'serif',
-        'mathtext.fontset': 'cm',
-        'axes.unicode_minus': False,
-        'axes.formatter.use_mathtext': True,
         'font.size': 12
     })
-    cmfont = font_manager.FontProperties(fname=mpl.get_data_path() + '/fonts/ttf/cmr10.ttf')
 latex_font()
 
 N = 30
@@ -56,6 +51,6 @@ index = range(N)
 e_res = resistor_solve(N)
 plt.grid()
 plt.scatter(index, e_res, marker = '.', color = 'r', zorder = 2)
-plt.xlabel('Junction index $e_i$')
-plt.ylabel('Voltage Drop (V)')
+plt.xlabel('Junction index $e_i$', size = 15)
+plt.ylabel('Voltage Drop (V)', size = 15)
 plt.show()

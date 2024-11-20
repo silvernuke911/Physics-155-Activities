@@ -95,6 +95,7 @@ def rk4_heat_equation_neumann(T0, L, alpha, dt, dx, t_end):
         return T + (k1 + 2 * k2 + 2 * k3 + k4) / 6
 
     # Perform the RK4 integration
+    
     for i in range(M):
         T_values[i + 1, :] = rk4_step(T_values[i, :])
     
